@@ -54,7 +54,11 @@ MONGODB SETTINGS
 DEPLOYMENT
 - Create a new Github repository
 - Stop the app from running
-
+- Run: git init > git add . > git commit -m 'app commit' > git remote add origin https://github.com/jperellolopez/next_commandland.git > git push -u origin master
+- Login on vercel with github account > add new project > import
+- On vercel go to settings > environment variables > add all the env variables on the .env file, replacing NEXTAUTH_URL and NEXTAUTH_URL_INTERNAL values from localhost to the url of the deployed app
+- On console.cloud.google > credentials > authorized javascript origins > add the app url. Also add the url twice under authorized redirect uris section and in the second one append 'api/auth/callback/google' at the end
+- On vercel go to the project section > deployment > redeploy
 
 -Run
 npm run dev
