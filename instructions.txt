@@ -1,0 +1,63 @@
+adv of nextjs vs react 
+
+1. Better SEO. Nextjs renders the app on the server side (vs react in client side) and sends it to the client rendered. This impacts on the SEO performance, which is much better in nextjs. Details on page.js file
+
+2. Better routing. React needs the react-router-dom package to be installed, then create the routes in a file. Nextjs uses a file-based routing system, so each folder inside the app directory automatically becomes a route . 
+
+3. Easier to create full stack apps. Nextjs has an API Routes feature, which enables the use os API endpoints without the need of a server. Creating a route.js file inside an app directory will create a route API endpoint. 
+
+4. Automatic code splitting. Breaks the code into chunks so only the required parts will be loaded when the app is used. This make loading times much faster.
+
+SERVER AND CLIENT SIDE COMPONENTS
+- Any component created inside the app folder is a SERVER SIDE COMPONENT by default. Put "use client" (within single or double quotes) at the top of the document to turn it into a CLIENT SIDE COMPONENT. 
+- If the component makes use of event listeners, states or hooks (ie: usestate, useeffect) is important to declare the component as client side, because state management is handled in the client side. 
+- To check use cases for server and client components refer to: https://nextjs.org/docs/getting-started/react-essentials#when-to-use-server-and-client-components
+
+ROUTING 
+- Simple routing: Create a folder inside the app directory, and inside that folder, a page.js file. Example: inside the 'app' folder we created a 'posts' folder with a page.js inside. The contents of this page.js will be displayed on the route: localhost:3000/posts
+- Nested routing: create another file inside the directory, with another page.js file inside. Example: inside the 'app' folder we created a 'posts' folder with a page.js inside. Inside that 'posts' folder we created another folder named 'new' with a page.js inside. The contents of the later page.js will be displayed on the route: localhost:3000/posts/new
+- Dynamic routing: allows to generate dynamic (changing) urls on the fly instead of doing it manually, as for example, an unique id (number) for every post displayed (localhost:3000/posts/:postId). To create a dynamic route, the folder name must be inside brackets ([postId]) with a regular page.js file inside.
+- Might be useful creating some other files along with the page.js file (at the same level). Examples: layout.js allows to share components between sub-routes; loading.js shows a given content until the page.js is fully loaded; error.js displays a given error message if there's an error. 
+
+DATA FETCHING
+Next.js offers 3 ways of data fetching:
+- SSG (static site generation): default option. It will fetch data, but it will also cache it. 
+- SSR (server side rendering): data is fetched fresh from the server on each request.Every request to the server triggers a new data fetch. Use the option "cache: 'no-store'" in the fetching function to use it.
+- ISR (incremental static generation): data will be cached, but after certain time a new request will be send and data will be refreshed.  Use the option "next: {revalidate: 10}" in the fetching function to use it. 
+
+API ENDPOINTS 
+- Create an api folder into the app directory, it will contain the backend of the application, while everything else on the app folder will be the front end. Inside the api folder create another subdirectories and inside each one a router.js file. This file will contain the function for each HTTPS methods (get, post, put, delete...). To call the API endpoint, call to localhost:3000/api/subdirectory
+
+
+STEPS
+1- Create the app with the command: npx create-next-app@latest ./
+2- Select options: typescript no, eslint no, tailwind yes, src no, router yes, alias yes enter. 
+3- Install dependencies: npm install bcrypt mongodb mongoose next-auth (to hash passwords, db and db management) 
+4- Delete all contents in the app and public folders (to start from zero). Create components, models, styles and utils folders in the root directory. Create a .env file in the root. 
+5- Define content for the font styles in the tailwind.config.css file (replace content with the new one). Create a globals.css file within the styles folder and define the styles. Create an assets folder inside public folder and put the assets (static resources as icons and images) inside. 
+6- Create basic files into the app folder: page.jsx (home page route) and layout.jsx (main entry point)
+
+SESSION WITH GOOGLE
+- Go to console.cloud.google.com
+- Create a new project and name it. Go to APIs and services > Oauth consent screen > select create > enter app name and email both on top and bottom
+- Go to credentials > create credentials > oauth client id > web application > add http://localhost:3000 both on authorized javascript origins and authorized redirect uris. In the last one (authorized redirect uris) also add http://localhost:3000/api/auth/callback/google
+- Copy the client id and client secret and paste them on the .env file
+- Reload the application (ctrl+c > y > npm run dev)
+- Put the client id and client secret env variables in app/api/auth/[...nextauth]/route.js file
+
+MONGODB SETTINGS
+- Go to mongodb/atlas > try free and sign in > go to deployment-database in the left panel and create a new cluster if there's nothing here. 
+- On the left panel go to security and database access, create a new user with name, password and built-in-role of admin
+- On the left panel go to network access, add the current ip and also 0.0.0.0/0 so it will be accessible from all ips. 
+- Go back to the database section on the left panel and click on connect > drivers > copy the mongodb uri and add to the .env file changing the <password> section with the actual mongodb user password
+
+DEPLOYMENT
+- Create a new Github repository
+- Stop the app from running
+
+
+-Run
+npm run dev
+
+
+
